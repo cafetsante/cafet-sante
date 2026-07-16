@@ -1,17 +1,22 @@
-# Cafet Santé — V10.1
+# Cafet Santé — V10.2
 
-Correction importante pour conserver le logo sur l’écran d’accueil.
+Cette version conserve le lien personnalisé dans l’adresse de l’icône.
 
-## Fonctionnement
+## Procédure exacte pour un bénévole
 
-1. Le bénévole ouvre son lien d’installation personnalisé.
-2. La page GitHub enregistre le lien personnel.
-3. Elle reste affichée et demande d’ajouter la page à l’écran d’accueil.
-4. Le bénévole utilise **Partager → Sur l’écran d’accueil**.
-5. L’icône affiche le logo Cafet Santé.
-6. Ensuite, lorsqu’il ouvre l’icône, la page redirige automatiquement vers son espace bénévole.
+1. Ouvrir le lien d’installation personnalisé reçu.
+2. Attendre la page « Prêt à installer ».
+3. Sans ouvrir le bouton de test et sans quitter la page :
+   - appuyer sur Partager ;
+   - choisir « Sur l’écran d’accueil » ;
+   - laisser « Ouvrir comme app web » activé ;
+   - appuyer sur Ajouter.
+4. Ouvrir ensuite l’icône Cafet Santé.
 
-## Mise à jour du dépôt
+Important : le paramètre `?app=...` doit rester visible dans l’adresse au moment
+de l’ajout à l’écran d’accueil.
 
-Importer tous les fichiers de ce dossier dans le dépôt `cafetsante/cafet-sante`
-et remplacer les fichiers existants, puis valider avec **Commit changes**.
+## Mise à jour GitHub
+
+Importer tous les fichiers de ce dossier à la racine du dépôt
+`cafetsante/cafet-sante`, remplacer les fichiers existants, puis Commit changes.
