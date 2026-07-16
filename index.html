@@ -2,45 +2,401 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Cafet Santé</title>
+
   <meta name="theme-color" content="#2f6f93">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Cafet Santé">
+
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
   <style>
-    body {
+    :root {
+      --blue: #2f6f93;
+      --blue-dark: #245978;
+      --accent: #d94a61;
+      --background: #f4f8fb;
+      --surface: #ffffff;
+      --text: #202124;
+      --muted: #5f6368;
+      --border: #d8e1e7;
+      --danger-bg: #fce8e6;
+      --danger: #a50e0e;
+      --success-bg: #e6f4ea;
+      --success: #137333;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
       margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: #f4f8fb;
-      color: #245978;
+      min-height: 100%;
+      background: var(--background);
+      color: var(--text);
       font-family: Arial, sans-serif;
     }
-    main {
-      width: min(92%, 520px);
-      padding: 32px;
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: max(18px, env(safe-area-inset-top))
+               max(18px, env(safe-area-inset-right))
+               max(18px, env(safe-area-inset-bottom))
+               max(18px, env(safe-area-inset-left));
+    }
+
+    .shell {
+      width: min(100%, 520px);
+    }
+
+    .card {
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 14px 45px rgba(36, 89, 120, .16);
+    }
+
+    .header {
+      padding: 28px 24px 22px;
       text-align: center;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 8px 30px rgba(36, 89, 120, .15);
+      background: linear-gradient(145deg, var(--blue-dark), var(--blue));
+      color: #fff;
     }
-    img {
-      width: 220px;
-      max-width: 70%;
-      height: auto;
+
+    .logo {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #fff;
+      padding: 4px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .22);
     }
-    h1 { margin: 18px 0 8px; }
-    p { color: #5f6368; line-height: 1.5; }
+
+    h1 {
+      margin: 18px 0 4px;
+      font-size: 30px;
+    }
+
+    .subtitle {
+      margin: 0;
+      opacity: .9;
+      font-size: 14px;
+    }
+
+    .content {
+      padding: 24px;
+    }
+
+    h2 {
+      margin: 0 0 9px;
+      color: var(--blue-dark);
+      font-size: 19px;
+    }
+
+    p {
+      margin: 8px 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin: 20px 0 7px;
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 13px;
+      padding: 12px;
+      border: 0;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .secondary {
+      background: #e8f1f6;
+      color: var(--blue-dark);
+    }
+
+    .link-button {
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      text-decoration: underline;
+    }
+
+    .message {
+      display: none;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 10px;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .message.error {
+      display: block;
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    .message.success {
+      display: block;
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .saved {
+      display: none;
+    }
+
+    .saved.active {
+      display: block;
+    }
+
+    .setup.hidden {
+      display: none;
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      margin: 18px auto 0;
+      border: 4px solid rgba(47, 111, 147, .16);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .footer {
+      margin-top: 13px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
   </style>
 </head>
+
 <body>
-  <main>
-    <img src="icon-512.png" alt="Logo Cafet Santé">
-    <h1>Cafet Santé</h1>
-    <p>Ressources graphiques officielles de l’application bénévole.</p>
+  <main class="shell">
+    <section class="card">
+      <header class="header">
+        <img class="logo" src="icon-512.png" alt="Logo Cafet Santé">
+        <h1>Cafet Santé</h1>
+        <p class="subtitle">L’application des bénévoles</p>
+      </header>
+
+      <div class="content">
+        <section id="setup" class="setup">
+          <h2>Première ouverture</h2>
+          <p>
+            Colle le lien personnel Cafet Santé transmis par l’administratrice.
+            Il restera enregistré uniquement sur ce téléphone.
+          </p>
+
+          <label for="personalUrl">Mon lien personnel</label>
+          <input
+            id="personalUrl"
+            type="url"
+            inputmode="url"
+            autocomplete="off"
+            autocapitalize="none"
+            spellcheck="false"
+            placeholder="https://script.google.com/macros/s/.../exec?code=..."
+          >
+
+          <button class="primary" onclick="saveAndOpen()">
+            Enregistrer et ouvrir mon espace
+          </button>
+        </section>
+
+        <section id="saved" class="saved">
+          <h2>Ouverture de ton espace…</h2>
+          <p>
+            Ton lien personnel est mémorisé sur ce téléphone.
+          </p>
+          <div class="spinner" aria-label="Chargement"></div>
+
+          <button class="secondary" onclick="openSavedUrl()">
+            Ouvrir maintenant
+          </button>
+
+          <button class="link-button" onclick="resetLink()">
+            Remplacer mon lien personnel
+          </button>
+        </section>
+
+        <div id="message" class="message"></div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Cafet Santé · Le lien personnel ne quitte pas ce téléphone
+    </div>
   </main>
+
+  <script>
+    const STORAGE_KEY = 'cafetSantePersonalUrl';
+    const REDIRECT_DELAY_MS = 650;
+
+    function showMessage(text, type) {
+      const element = document.getElementById('message');
+      element.className = 'message ' + type;
+      element.textContent = text;
+    }
+
+    function clearMessage() {
+      const element = document.getElementById('message');
+      element.className = 'message';
+      element.textContent = '';
+    }
+
+    function normalizeUrl(value) {
+      return String(value || '').trim();
+    }
+
+    function isValidPersonalUrl(value) {
+      try {
+        const url = new URL(value);
+
+        return (
+          url.protocol === 'https:' &&
+          url.hostname === 'script.google.com' &&
+          url.pathname.includes('/macros/s/') &&
+          url.pathname.endsWith('/exec') &&
+          url.searchParams.has('code') &&
+          url.searchParams.get('code').length >= 20
+        );
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function getSavedUrl() {
+      return normalizeUrl(localStorage.getItem(STORAGE_KEY));
+    }
+
+    function displaySavedState() {
+      document.getElementById('setup').classList.add('hidden');
+      document.getElementById('saved').classList.add('active');
+    }
+
+    function displaySetupState() {
+      document.getElementById('setup').classList.remove('hidden');
+      document.getElementById('saved').classList.remove('active');
+    }
+
+    function openUrl(url) {
+      window.location.replace(url);
+    }
+
+    function saveAndOpen() {
+      clearMessage();
+
+      const value = normalizeUrl(
+        document.getElementById('personalUrl').value
+      );
+
+      if (!isValidPersonalUrl(value)) {
+        showMessage(
+          'Ce lien ne ressemble pas à un lien personnel Cafet Santé valide. ' +
+          'Recopie le lien complet contenant « /exec?code=... ».',
+          'error'
+        );
+        return;
+      }
+
+      localStorage.setItem(STORAGE_KEY, value);
+      showMessage('Lien enregistré sur ce téléphone.', 'success');
+      displaySavedState();
+
+      setTimeout(function() {
+        openUrl(value);
+      }, 450);
+    }
+
+    function openSavedUrl() {
+      const value = getSavedUrl();
+
+      if (!isValidPersonalUrl(value)) {
+        resetLink();
+        return;
+      }
+
+      openUrl(value);
+    }
+
+    function resetLink() {
+      localStorage.removeItem(STORAGE_KEY);
+      document.getElementById('personalUrl').value = '';
+      clearMessage();
+      displaySetupState();
+    }
+
+    function readSetupUrlFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const value = normalizeUrl(params.get('app'));
+
+      if (isValidPersonalUrl(value)) {
+        localStorage.setItem(STORAGE_KEY, value);
+        history.replaceState({}, document.title, window.location.pathname);
+        return value;
+      }
+
+      return '';
+    }
+
+    function initialize() {
+      const queryUrl = readSetupUrlFromQuery();
+      const savedUrl = queryUrl || getSavedUrl();
+
+      if (isValidPersonalUrl(savedUrl)) {
+        displaySavedState();
+
+        setTimeout(function() {
+          openUrl(savedUrl);
+        }, REDIRECT_DELAY_MS);
+
+        return;
+      }
+
+      displaySetupState();
+    }
+
+    initialize();
+  </script>
 </body>
 </html>
