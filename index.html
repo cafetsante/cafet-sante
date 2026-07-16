@@ -244,14 +244,13 @@
         </section>
 
         <section id="saved" class="saved">
-          <h2>Ouverture de ton espace…</h2>
-          <p>
-            Ton lien personnel est mémorisé sur ce téléphone.
+          <h2 id="savedTitle">Lien enregistré ✅</h2>
+          <p id="savedText">
+            Ajoute maintenant cette page à l’écran d’accueil pour conserver le logo Cafet Santé.
           </p>
-          <div class="spinner" aria-label="Chargement"></div>
 
-          <button class="secondary" onclick="openSavedUrl()">
-            Ouvrir maintenant
+          <button id="openButton" class="secondary" onclick="openSavedUrl()">
+            Ouvrir mon espace bénévole
           </button>
 
           <button class="link-button" onclick="resetLink()">
@@ -309,9 +308,31 @@
       return normalizeUrl(localStorage.getItem(STORAGE_KEY));
     }
 
-    function displaySavedState() {
+    function isStandaloneMode() {
+      return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true
+      );
+    }
+
+    function displaySavedState(isStandalone) {
       document.getElementById('setup').classList.add('hidden');
       document.getElementById('saved').classList.add('active');
+
+      const title = document.getElementById('savedTitle');
+      const text = document.getElementById('savedText');
+      const button = document.getElementById('openButton');
+
+      if (isStandalone) {
+        title.textContent = 'Ouverture de ton espace…';
+        text.textContent = 'Cafet Santé te redirige vers ton espace bénévole.';
+        button.textContent = 'Ouvrir maintenant';
+      } else {
+        title.textContent = 'Lien enregistré ✅';
+        text.textContent =
+          'Ajoute maintenant cette page à l’écran d’accueil pour conserver le logo Cafet Santé.';
+        button.textContent = 'Tester mon espace bénévole';
+      }
     }
 
     function displaySetupState() {
@@ -341,11 +362,7 @@
 
       localStorage.setItem(STORAGE_KEY, value);
       showMessage('Lien enregistré sur ce téléphone.', 'success');
-      displaySavedState();
-
-      setTimeout(function() {
-        openUrl(value);
-      }, 450);
+      displaySavedState(false);
     }
 
     function openSavedUrl() {
@@ -384,11 +401,14 @@
       const savedUrl = queryUrl || getSavedUrl();
 
       if (isValidPersonalUrl(savedUrl)) {
-        displaySavedState();
+        const standalone = isStandaloneMode();
+        displaySavedState(standalone);
 
-        setTimeout(function() {
-          openUrl(savedUrl);
-        }, REDIRECT_DELAY_MS);
+        if (standalone) {
+          setTimeout(function() {
+            openUrl(savedUrl);
+          }, REDIRECT_DELAY_MS);
+        }
 
         return;
       }

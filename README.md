@@ -1,35 +1,17 @@
-# Cafet Santé — Porte d’entrée mobile
+# Cafet Santé — V10.1
 
-Cette page GitHub Pages sert uniquement de raccourci avec le logo Cafet Santé.
+Correction importante pour conserver le logo sur l’écran d’accueil.
 
-## Mise à jour du dépôt existant
+## Fonctionnement
 
-1. Ouvrir le dépôt `cafetsante/cafet-sante`.
-2. Cliquer sur `Add file` puis `Upload files`.
-3. Importer tous les fichiers de ce dossier à la racine.
-4. Accepter le remplacement de `index.html` et `manifest.webmanifest`.
-5. Cliquer sur `Commit changes`.
-6. Attendre une à deux minutes.
+1. Le bénévole ouvre son lien d’installation personnalisé.
+2. La page GitHub enregistre le lien personnel.
+3. Elle reste affichée et demande d’ajouter la page à l’écran d’accueil.
+4. Le bénévole utilise **Partager → Sur l’écran d’accueil**.
+5. L’icône affiche le logo Cafet Santé.
+6. Ensuite, lorsqu’il ouvre l’icône, la page redirige automatiquement vers son espace bénévole.
 
-## Utilisation par un bénévole
+## Mise à jour du dépôt
 
-1. Ouvrir `https://cafetsante.github.io/cafet-sante/` dans Safari ou Chrome.
-2. Coller une seule fois le lien personnel Apps Script.
-3. Appuyer sur `Enregistrer et ouvrir mon espace`.
-4. Revenir ensuite sur la page GitHub.
-5. Ajouter cette page à l’écran d’accueil.
-
-Le téléphone mémorise le lien personnel dans son stockage local.
-
-## Réinitialisation
-
-Pour remplacer le lien, ouvrir la page GitHub dans le navigateur et utiliser
-`Remplacer mon lien personnel`.
-
-## Installation accélérée
-
-Une URL de préparation peut être créée avec le paramètre `app` :
-
-`https://cafetsante.github.io/cafet-sante/?app=LIEN_PERSONNEL_ENCODE`
-
-Le lien personnel doit être encodé avec `encodeURIComponent`.
+Importer tous les fichiers de ce dossier dans le dépôt `cafetsante/cafet-sante`
+et remplacer les fichiers existants, puis valider avec **Commit changes**.
